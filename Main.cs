@@ -26,6 +26,8 @@ namespace Notepad
         {
             CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
             Text = DEFAULT_TEXT;
+            tsmiZoomIn.ShortcutKeys = Keys.Control | Keys.Add;
+            tsmiZoomOut.ShortcutKeys = Keys.Control | Keys.Subtract;
         }
 
         // Arquivo
@@ -176,11 +178,6 @@ namespace Notepad
             textField.Paste();
         }
 
-        public void Delete(object sender, EventArgs e)
-        {
-
-        }
-
         public void SelectAll(object sender, EventArgs e)
         {
             textField.SelectAll();
@@ -189,7 +186,11 @@ namespace Notepad
         // Formatar
         private void ChangeFont(object sender, EventArgs e)
         {
-            fontDialog.ShowDialog();
+            DialogResult dr = fontDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                textField.Font = fontDialog.Font;
+            }
         }
 
         // Exibir

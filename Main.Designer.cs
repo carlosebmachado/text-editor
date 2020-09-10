@@ -43,7 +43,6 @@
             this.tsmicCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmicCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmicPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmicDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmicSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +59,6 @@
             this.tsmiCut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiDel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsmiSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiFormat = new System.Windows.Forms.ToolStripMenuItem();
@@ -153,68 +151,66 @@
             this.tsmicCut,
             this.tsmicCopy,
             this.tsmicPaste,
-            this.tsmicDelete,
             this.toolStripSeparator4,
             this.tsmicSelectAll});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(121, 170);
+            this.contextMenuStrip.Size = new System.Drawing.Size(163, 148);
             // 
             // tsmicUndo
             // 
             this.tsmicUndo.Name = "tsmicUndo";
-            this.tsmicUndo.Size = new System.Drawing.Size(120, 22);
+            this.tsmicUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.tsmicUndo.Size = new System.Drawing.Size(162, 22);
             this.tsmicUndo.Text = "Undo";
             this.tsmicUndo.Click += new System.EventHandler(this.Undo);
             // 
             // tsmicRedo
             // 
             this.tsmicRedo.Name = "tsmicRedo";
-            this.tsmicRedo.Size = new System.Drawing.Size(120, 22);
+            this.tsmicRedo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.tsmicRedo.Size = new System.Drawing.Size(162, 22);
             this.tsmicRedo.Text = "Redo";
             this.tsmicRedo.Click += new System.EventHandler(this.Redo);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(117, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
             // 
             // tsmicCut
             // 
             this.tsmicCut.Name = "tsmicCut";
-            this.tsmicCut.Size = new System.Drawing.Size(120, 22);
+            this.tsmicCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.tsmicCut.Size = new System.Drawing.Size(162, 22);
             this.tsmicCut.Text = "Cut";
             this.tsmicCut.Click += new System.EventHandler(this.Cut);
             // 
             // tsmicCopy
             // 
             this.tsmicCopy.Name = "tsmicCopy";
-            this.tsmicCopy.Size = new System.Drawing.Size(120, 22);
+            this.tsmicCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsmicCopy.Size = new System.Drawing.Size(162, 22);
             this.tsmicCopy.Text = "Copy";
             this.tsmicCopy.Click += new System.EventHandler(this.Copy);
             // 
             // tsmicPaste
             // 
             this.tsmicPaste.Name = "tsmicPaste";
-            this.tsmicPaste.Size = new System.Drawing.Size(120, 22);
+            this.tsmicPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.tsmicPaste.Size = new System.Drawing.Size(162, 22);
             this.tsmicPaste.Text = "Paste";
             this.tsmicPaste.Click += new System.EventHandler(this.Paste);
-            // 
-            // tsmicDelete
-            // 
-            this.tsmicDelete.Name = "tsmicDelete";
-            this.tsmicDelete.Size = new System.Drawing.Size(120, 22);
-            this.tsmicDelete.Text = "Del";
-            this.tsmicDelete.Click += new System.EventHandler(this.Delete);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(117, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(159, 6);
             // 
             // tsmicSelectAll
             // 
             this.tsmicSelectAll.Name = "tsmicSelectAll";
-            this.tsmicSelectAll.Size = new System.Drawing.Size(120, 22);
+            this.tsmicSelectAll.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.tsmicSelectAll.Size = new System.Drawing.Size(162, 22);
             this.tsmicSelectAll.Text = "Select all";
             this.tsmicSelectAll.Click += new System.EventHandler(this.SelectAll);
             // 
@@ -286,7 +282,6 @@
             this.tsmiCut,
             this.tsmiCopy,
             this.tsmiPaste,
-            this.tsmiDel,
             this.toolStripSeparator5,
             this.tsmiSelectAll});
             this.tsmiEdit.Name = "tsmiEdit";
@@ -339,14 +334,6 @@
             this.tsmiPaste.Text = "Paste";
             this.tsmiPaste.Click += new System.EventHandler(this.Paste);
             // 
-            // tsmiDel
-            // 
-            this.tsmiDel.Name = "tsmiDel";
-            this.tsmiDel.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.tsmiDel.Size = new System.Drawing.Size(180, 22);
-            this.tsmiDel.Text = "Del";
-            this.tsmiDel.Click += new System.EventHandler(this.Delete);
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -390,19 +377,19 @@
             // tsmiShowHelp
             // 
             this.tsmiShowHelp.Name = "tsmiShowHelp";
-            this.tsmiShowHelp.Size = new System.Drawing.Size(180, 22);
+            this.tsmiShowHelp.Size = new System.Drawing.Size(129, 22);
             this.tsmiShowHelp.Text = "Show help";
             this.tsmiShowHelp.Click += new System.EventHandler(this.Help);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(126, 6);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(129, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.About);
             // 
@@ -448,7 +435,6 @@
             // tsmiZoomIn
             // 
             this.tsmiZoomIn.Name = "tsmiZoomIn";
-            this.tsmiZoomIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
             this.tsmiZoomIn.Size = new System.Drawing.Size(199, 22);
             this.tsmiZoomIn.Text = "Zoom in";
             this.tsmiZoomIn.Click += new System.EventHandler(this.ZoomIn);
@@ -456,7 +442,6 @@
             // tsmiZoomOut
             // 
             this.tsmiZoomOut.Name = "tsmiZoomOut";
-            this.tsmiZoomOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
             this.tsmiZoomOut.Size = new System.Drawing.Size(199, 22);
             this.tsmiZoomOut.Text = "Zoom out";
             this.tsmiZoomOut.Click += new System.EventHandler(this.ZoomOut);
@@ -568,7 +553,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiCut;
         private System.Windows.Forms.ToolStripMenuItem tsmiCopy;
         private System.Windows.Forms.ToolStripMenuItem tsmiPaste;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem tsmiSelectAll;
         private System.Windows.Forms.ToolStripMenuItem tsmiFormat;
@@ -594,7 +578,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmicCut;
         private System.Windows.Forms.ToolStripMenuItem tsmicCopy;
         private System.Windows.Forms.ToolStripMenuItem tsmicPaste;
-        private System.Windows.Forms.ToolStripMenuItem tsmicDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem tsmicSelectAll;
         private System.Windows.Forms.RichTextBox textField;
