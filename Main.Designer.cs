@@ -34,7 +34,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslZoom = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslCoding = new System.Windows.Forms.ToolStripStatusLabel();
-            this.separatorDownside = new System.Windows.Forms.Panel();
             this.separatorUpside = new System.Windows.Forms.Panel();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmicUndo = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,11 +73,11 @@
             this.tsmiZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiDefaultZoom = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStatusBar = new System.Windows.Forms.ToolStripMenuItem();
-            this.separatorDown = new System.Windows.Forms.Panel();
             this.textField = new System.Windows.Forms.RichTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.separatorDownside = new System.Windows.Forms.Panel();
             this.statusStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -121,16 +120,6 @@
             this.tsslCoding.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.tsslCoding.Size = new System.Drawing.Size(42, 19);
             this.tsslCoding.Text = "UTF-8";
-            // 
-            // separatorDownside
-            // 
-            this.separatorDownside.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorDownside.BackColor = System.Drawing.Color.Gainsboro;
-            this.separatorDownside.Location = new System.Drawing.Point(0, 427);
-            this.separatorDownside.Name = "separatorDownside";
-            this.separatorDownside.Size = new System.Drawing.Size(800, 1);
-            this.separatorDownside.TabIndex = 4;
             // 
             // separatorUpside
             // 
@@ -377,19 +366,19 @@
             // tsmiShowHelp
             // 
             this.tsmiShowHelp.Name = "tsmiShowHelp";
-            this.tsmiShowHelp.Size = new System.Drawing.Size(129, 22);
+            this.tsmiShowHelp.Size = new System.Drawing.Size(180, 22);
             this.tsmiShowHelp.Text = "Show help";
             this.tsmiShowHelp.Click += new System.EventHandler(this.Help);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(126, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmiAbout
             // 
             this.tsmiAbout.Name = "tsmiAbout";
-            this.tsmiAbout.Size = new System.Drawing.Size(129, 22);
+            this.tsmiAbout.Size = new System.Drawing.Size(180, 22);
             this.tsmiAbout.Text = "About";
             this.tsmiAbout.Click += new System.EventHandler(this.About);
             // 
@@ -464,34 +453,21 @@
             this.tsmiStatusBar.Text = "Status bar";
             this.tsmiStatusBar.CheckedChanged += new System.EventHandler(this.StatusBar);
             // 
-            // separatorDown
-            // 
-            this.separatorDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.separatorDown.Location = new System.Drawing.Point(0, 427);
-            this.separatorDown.Name = "separatorDown";
-            this.separatorDown.Size = new System.Drawing.Size(800, 1);
-            this.separatorDown.TabIndex = 6;
-            // 
             // textField
             // 
             this.textField.AcceptsTab = true;
-            this.textField.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textField.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textField.ContextMenuStrip = this.contextMenuStrip;
             this.textField.DetectUrls = false;
+            this.textField.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textField.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textField.HideSelection = false;
-            this.textField.Location = new System.Drawing.Point(0, 22);
+            this.textField.Location = new System.Drawing.Point(0, 20);
             this.textField.Name = "textField";
             this.textField.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.textField.Size = new System.Drawing.Size(800, 405);
+            this.textField.Size = new System.Drawing.Size(800, 406);
             this.textField.TabIndex = 5;
             this.textField.Text = "";
-            this.textField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextField_KeyPress);
             // 
             // openFileDialog
             // 
@@ -508,6 +484,16 @@
             // 
             this.fontDialog.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
+            // separatorDownside
+            // 
+            this.separatorDownside.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorDownside.BackColor = System.Drawing.Color.Gainsboro;
+            this.separatorDownside.Location = new System.Drawing.Point(0, 427);
+            this.separatorDownside.Name = "separatorDownside";
+            this.separatorDownside.Size = new System.Drawing.Size(800, 1);
+            this.separatorDownside.TabIndex = 4;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -515,7 +501,6 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.separatorUpside);
-            this.Controls.Add(this.separatorDown);
             this.Controls.Add(this.textField);
             this.Controls.Add(this.separatorDownside);
             this.Controls.Add(this.menuStrip);
@@ -538,7 +523,6 @@
         #endregion
         private System.Windows.Forms.ToolStripStatusLabel tsslRowCol;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.Panel separatorDownside;
         private System.Windows.Forms.Panel separatorUpside;
         private System.Windows.Forms.ToolStripMenuItem tsmiFile;
         private System.Windows.Forms.ToolStripMenuItem tsmiNew;
@@ -562,7 +546,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem tsmiAbout;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.Panel separatorDown;
         private System.Windows.Forms.ToolStripStatusLabel tsslCoding;
         private System.Windows.Forms.ToolStripMenuItem tsmiRedo;
         private System.Windows.Forms.ToolStripMenuItem tsmiShow;
@@ -585,6 +568,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.FontDialog fontDialog;
+        private System.Windows.Forms.Panel separatorDownside;
     }
 }
 

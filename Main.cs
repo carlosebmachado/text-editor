@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Notepad
@@ -12,10 +14,12 @@ namespace Notepad
         private const string SEPARATOR = " - ";
         private const string CHANGE_NOTICE = "*";
         private const string DEFAULT_TEXT = DEFAULT_FILE_NAME + SEPARATOR + PROGRAM_NAME;
+        private const int DEFAULT_ZOOM_FACTOR = 100;
 
-        private int _zoomFactor = 100;
-        private string _curFileName = DEFAULT_FILE_NAME;
-        private string _curFilePath = null;
+        private int _zoomFactor;
+        private string _curFileName;
+        private string _curFilePath;
+        private Encoding _encoding;
 
         public Main()
         {
@@ -25,36 +29,56 @@ namespace Notepad
         private void Main_Load(object sender, EventArgs e)
         {
             CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
-            Text = DEFAULT_TEXT;
             tsmiZoomIn.ShortcutKeys = Keys.Control | Keys.Add;
             tsmiZoomOut.ShortcutKeys = Keys.Control | Keys.Subtract;
+
+            textField.TextChanged += TextField_TextChanged;
+            textField.SelectionChanged += TextField_SelectionChanged;
+
+            Clean();
         }
 
-        // Arquivo
+
+        // File
+
         private void New(object sender, EventArgs e)
         {
             if (textField.CanUndo)
             {
-                DefaultSaveMessage();
+                var dr = DefaultSaveMessage();
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        Save(new object(), new EventArgs());
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        return;
+                    default:
+                        break;
+                }
             }
             Clean();
-        }
-
-        private void Clean()
-        {
-            Text = DEFAULT_TEXT;
-            textField.Clear();
-            textField.ClearUndo();
-            textField.Focus();
-            _curFileName = DEFAULT_FILE_NAME;
-            _curFilePath = null;
         }
 
         private void Open(object sender, EventArgs e)
         {
             if (textField.CanUndo)
             {
-                DefaultSaveMessage();
+                var dr = DefaultSaveMessage();
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        Save(new object(), new EventArgs());
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        return;
+                    default:
+                        break;
+                }
             }
             Open();
         }
@@ -64,42 +88,23 @@ namespace Notepad
             DialogResult dr = openFileDialog.ShowDialog();
             if (dr == DialogResult.OK)
             {
+                Clean();
                 _curFilePath = openFileDialog.FileNames[0];
                 try
                 {
                     var file = new StreamReader(_curFilePath);
+                    _encoding = file.CurrentEncoding;
+                    SetEncodingStatus();
                     textField.Text = file.ReadToEnd();
                     var fileName = _curFilePath.Split('\\');
                     _curFileName = fileName[fileName.Length - 1];
-                    Text = _curFileName + SEPARATOR + PROGRAM_NAME;
+                    Text = GetCurrentProgramTitle();
                     file.Close();
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-            }
-        }
-
-        private void DefaultSaveMessage()
-        {
-            DialogResult dr = MessageBox.Show(
-                    "Do you want to save changes in " + _curFileName + "?",
-                    "Text Editor",
-                    MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question);
-
-            switch (dr)
-            {
-                case DialogResult.Yes:
-                    Save(new object(), new EventArgs());
-                    break;
-                case DialogResult.No:
-                    break;
-                case DialogResult.Cancel:
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -111,10 +116,11 @@ namespace Notepad
             }
             else
             {
-                var file = new StreamWriter(_curFilePath);
+                var file = new StreamWriter(_curFilePath, false, _encoding);
                 file.Write(textField.Text);
                 file.Close();
-                Text = _curFileName + SEPARATOR + PROGRAM_NAME;
+                Text = GetCurrentProgramTitle();
+                textField.ClearUndo();
             }
         }
 
@@ -127,12 +133,13 @@ namespace Notepad
                 _curFilePath = saveFileDialog.FileNames[0];
                 try
                 {
-                    var file = new StreamWriter(_curFilePath);
+                    var file = new StreamWriter(_curFilePath, false, _encoding);
                     file.Write(textField.Text);
                     var fileName = _curFilePath.Split('\\');
                     _curFileName = fileName[fileName.Length - 1];
-                    Text = _curFileName + SEPARATOR + PROGRAM_NAME;
+                    Text = GetCurrentProgramTitle();
                     file.Close();
+                    textField.ClearUndo();
                 }
                 catch (Exception ex)
                 {
@@ -145,24 +152,37 @@ namespace Notepad
         {
             if (textField.CanUndo)
             {
-                DefaultSaveMessage();
+                var dr = DefaultSaveMessage();
+                switch (dr)
+                {
+                    case DialogResult.Yes:
+                        Save(new object(), new EventArgs());
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        return;
+                    default:
+                        break;
+                }
             }
             Application.Exit();
         }
 
-        //Editar
+
+        //Edit
+
         public void Undo(object sender, EventArgs e)
         {
             textField.Undo();
-            if (!textField.CanUndo)
-            {
-                Text = _curFileName + SEPARATOR + PROGRAM_NAME;
-            }
+            CheckCanUndo();
         }
+
         public void Redo(object sender, EventArgs e)
         {
             textField.Redo();
         }
+
         public void Cut(object sender, EventArgs e)
         {
             textField.Cut();
@@ -183,7 +203,9 @@ namespace Notepad
             textField.SelectAll();
         }
 
-        // Formatar
+
+        // Format
+
         private void ChangeFont(object sender, EventArgs e)
         {
             DialogResult dr = fontDialog.ShowDialog();
@@ -193,7 +215,9 @@ namespace Notepad
             }
         }
 
-        // Exibir
+
+        // Show
+
         private void ZoomIn(object sender, EventArgs e)
         {
             if (_zoomFactor < 500)
@@ -212,59 +236,139 @@ namespace Notepad
 
         private void DefaultZoom(object sender, EventArgs e)
         {
-            textField.ZoomFactor = 1;
-            _zoomFactor = 100;
-            tsslZoom.Text = "100%";
+            DefaultZoom();
         }
 
         private void StatusBar(object sender, EventArgs e)
         {
-            if (tsmiStatusBar.Checked)
-            {
-                statusStrip.Visible = true;
-                separatorDown.Visible = true;
-                textField.Dock = DockStyle.None;
-                textField.Width = Width - 16;
-                textField.Height = Height - 82;
-                textField.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-            }
-            else
-            {
-                statusStrip.Visible = false;
-                separatorDown.Visible = false;
-                textField.Dock = DockStyle.Fill;
-            }
+            statusStrip.Visible = tsmiStatusBar.Checked;
+            separatorDownside.Visible = tsmiStatusBar.Checked;
         }
 
-        // Ajuda
+
+        // Help
+
         private void Help(object sender, EventArgs e)
         {
-
+            Process.Start("https://duckduckgo.com/?va=u&t=hc&q=get+help+with+notepad&ia=web");
         }
 
         private void About(object sender, EventArgs e)
         {
-            
+            MessageBox.Show("A simple text editor software.", 
+                "About Text Editor",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
-        // Funcionamento
-        private void TextField_KeyPress(object sender, KeyPressEventArgs e)
+
+        // Working Functions
+
+        private void TextField_TextChanged(object sender, EventArgs e)
         {
-            
-            if (e.KeyChar > 31 && e.KeyChar < 255)
-            {
-                if (textField.CanUndo)
-                {
-                    Text = CHANGE_NOTICE + _curFileName + SEPARATOR + PROGRAM_NAME;
-                }
-            }
+            CheckCanUndo();
+        }
+
+        private void TextField_SelectionChanged(object sender, EventArgs e)
+        {
+            SetRowColStatus();
+        }
+
+        private void CheckCanUndo()
+        {
+            Text = (textField.CanUndo ? CHANGE_NOTICE : "") + GetCurrentProgramTitle();
+        }
+
+        private void SetZoomFactorStatus()
+        {
+            tsslZoom.Text = _zoomFactor.ToString() + "%";
+        }
+
+        private void SetRowColStatus()
+        {
+            tsslRowCol.Text = "Row " + GetTextFieldRow() + ", Col " + GetTextFieldCol();
+        }
+
+        private void SetEncodingStatus()
+        {
+            tsslCoding.Text = _encoding.HeaderName.ToUpper();
+        }
+
+        private void SetTextFieldZoomFactor()
+        {
+            textField.ZoomFactor = (float)_zoomFactor / 100;
         }
 
         private void AddZoom(int amt)
         {
             _zoomFactor += amt;
-            textField.ZoomFactor = (float)_zoomFactor / 100;
-            tsslZoom.Text = _zoomFactor.ToString() + "%";
+            SetTextFieldZoomFactor();
+            SetZoomFactorStatus();
+        }
+
+        private int GetRawTextFieldRow()
+        {
+            return textField.GetLineFromCharIndex(textField.SelectionStart);
+        }
+
+        private int GetRawTextFieldCol()
+        {
+            return textField.SelectionStart - textField.GetFirstCharIndexFromLine(GetRawTextFieldRow());
+        }
+
+        private int GetTextFieldRow()
+        {
+            return GetRawTextFieldRow() + 1;
+        }
+
+        private int GetTextFieldCol()
+        {
+            return GetRawTextFieldCol() + 1;
+        }
+
+        private string GetCurrentProgramTitle()
+        {
+            return _curFileName + SEPARATOR + PROGRAM_NAME;
+        }
+
+        private void DefaultZoom()
+        {
+            _zoomFactor = DEFAULT_ZOOM_FACTOR;
+            SetTextFieldZoomFactor();
+            SetZoomFactorStatus();
+        }
+
+        private void DefaultEncoding()
+        {
+            _encoding = Encoding.UTF8;
+            SetEncodingStatus();
+        }
+
+        private void DeafultTextField()
+        {
+            textField.Clear();
+            textField.ClearUndo();
+            textField.Focus();
+            SetRowColStatus();
+        }
+
+        private void Clean()
+        {
+            Text = DEFAULT_TEXT;
+            _curFileName = DEFAULT_FILE_NAME;
+            _curFilePath = null;
+            DeafultTextField();
+            DefaultEncoding();
+            DefaultZoom();
+        }
+
+        private DialogResult DefaultSaveMessage()
+        {
+            return MessageBox.Show(
+                    "Do you want to save changes in " + _curFileName + "?",
+                    "Text Editor",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
         }
     }
 }
