@@ -23,7 +23,7 @@ This is a simple and lightweight text editor tool that allows you to create and 
 1. When you are finished editing your file, click on the "Save" button to save it to your computer in the .txt format.
 
 ## Demo
-You can try out downloading the text editor app [here]().
+You can try out downloading the text editor app on releases.
 
 ## Contributions
 Contributions to this text editor tool are welcome. If you find a bug or have a feature request, please create an issue or submit a pull request.
