@@ -15,6 +15,7 @@ namespace Notepad
         private const string CHANGE_NOTICE = "*";
         private const string DEFAULT_TEXT = DEFAULT_FILE_NAME + SEPARATOR + PROGRAM_NAME;
         private const int DEFAULT_ZOOM_FACTOR = 100;
+        private const int ZOOM_FACTOR_DIV = 100;
 
         private int _zoomFactor;
         private string _curFileName;
@@ -34,10 +35,10 @@ namespace Notepad
 
             textField.TextChanged += TextField_TextChanged;
             textField.SelectionChanged += TextField_SelectionChanged;
+            textField.ContentsResized += TextField_ContentsResized;
 
             Clean();
         }
-
 
         // File
 
@@ -264,6 +265,19 @@ namespace Notepad
 
         // Working Functions
 
+        private int RoundNearTenMult(int number)
+        {
+            int smaller = (number / 10) * 10;
+            int bigger = smaller + 10;
+            return (number - smaller > bigger - number) ? bigger : smaller;
+        }
+
+        private void TextField_ContentsResized(object sender, EventArgs e)
+        {
+            _zoomFactor = RoundNearTenMult((int)(textField.ZoomFactor * ZOOM_FACTOR_DIV));
+            SetZoomFactorStatus();
+        }
+
         private void TextField_TextChanged(object sender, EventArgs e)
         {
             CheckCanUndo();
@@ -296,7 +310,7 @@ namespace Notepad
 
         private void SetTextFieldZoomFactor()
         {
-            textField.ZoomFactor = (float)_zoomFactor / 100;
+            textField.ZoomFactor = (float)_zoomFactor / ZOOM_FACTOR_DIV;
         }
 
         private void AddZoom(int amt)
