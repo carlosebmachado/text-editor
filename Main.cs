@@ -250,7 +250,7 @@ namespace Notepad
 
         private void Help(object sender, EventArgs e)
         {
-            Process.Start("https://duckduckgo.com/?va=u&t=hc&q=get+help+with+notepad&ia=web");
+            Process.Start("https://github.com/carlosebmachado/text-editor");
         }
 
         private void About(object sender, EventArgs e)
